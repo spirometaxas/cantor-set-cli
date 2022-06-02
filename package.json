@@ -1,0 +1,33 @@
+{
+  "name": "cantor-set-cli",
+  "version": "1.0.0",
+  "description": "Print the Cantor Set to the console!",
+  "main": "./src/index.js",
+  "bin": {
+    "cantor-set-cli": "./src/cli.js"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spirometaxas/cantor-set-cli.git"
+  },
+  "scripts": {
+    "cli": "node ./src/cli.js"
+  },
+  "author": "Spiro Metaxas",
+  "license": "MIT",
+  "keywords": [ 
+    "Cantor", 
+    "Cantor Set", 
+    "fractal",
+    "fractals", 
+    "cantor-set-cli", 
+    "cli",
+    "console",
+    "terminal",
+    "shell",
+    "unicode" 
+  ]
+}
