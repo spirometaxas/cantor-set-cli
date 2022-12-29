@@ -3,13 +3,16 @@ const cantor_set = require('./index.js');
 
 const printUsage = function(showIntro) {
     if (showIntro) {
-        console.log('\n Print the Cantor Set Fractal to the console!');
+        console.log(cantor_set.create(3));
+        console.log(' Print the Cantor Set Fractal to the console!');
     }
     console.log('\n' + 
                 ' Usage:\n' + 
                 '   $ cantor-set-cli <n>\n' + 
                 '   $ cantor-set-cli <n> <size>\n' + 
                 '\n' + 
+                '   <n> is the recursive step, a number greater than or equal to 0\n' + 
+                '\n' +
                 ' Options:\n' + 
                 '   --line=<line>  Draw using a specific line type: [bold|double|full|block|standard] \n'); 
 }

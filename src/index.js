@@ -11,11 +11,13 @@ const getHeight = function(n, isBlockOrFull) {
 }
 
 const LINES = {
-  STANDARD: '─',
-  BOLD: '━',
-  DOUBLE: '═',
-  FULL: '\u001b[7m \u001b[0m',
-  BLOCK: '█'
+  '─': {
+    STANDARD: '─',
+    BOLD: '━',
+    DOUBLE: '═',
+    FULL: '\u001b[7m \u001b[0m',
+    BLOCK: '█'
+  }
 };
 
 const getLineType = function(line) {
@@ -29,11 +31,14 @@ const isBlockOrFull = function(line) {
   return line !== undefined && (line.toLowerCase() === 'full' || line.toLowerCase() === 'block');
 }
 
-const getLine = function(line) {
-  if (line) {
-    return LINES[line.toUpperCase()];
+const getLine = function(lineId, lineType) {
+  if (LINES[lineId] !== undefined && lineType !== undefined) {
+    return LINES[lineId][lineType.toUpperCase()];
+  } else if (LINES[lineId] !== undefined) {
+    return LINES[lineId].STANDARD;
+  } else {
+    return ' ';
   }
-  return LINES.STANDARD;
 }
 
 const createBoard = function(w, h) {
@@ -48,14 +53,14 @@ const createBoard = function(w, h) {
   return board;
 }
 
-const drawLine = function(board, pos, size, line) {
+const drawLine = function(board, pos, size) {
   for (let i = 0; i < getWidth(size); i++) {
-    board[pos.y][pos.x - parseInt(getWidth(size) / 2.0) + i] = getLine(line);
+    board[pos.y][pos.x - parseInt(getWidth(size) / 2.0) + i] = '─';
   }
 }
 
 const cantor = function(n, size, board, pos, line) {
-  drawLine(board, pos, size, line);
+  drawLine(board, pos, size);
 
   if (n > 0) {
     cantor(n - 1, size - 1, board, { x: pos.x - getWidth(size - 1), y: isBlockOrFull(line) ? pos.y - 2 : pos.y - 1 }, line);
@@ -63,11 +68,11 @@ const cantor = function(n, size, board, pos, line) {
   }
 }
 
-const draw = function(board, line) {
+const draw = function(board, lineType) {
   var result = '\n ';
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      result += board[board.length - i - 1][j];
+      result += getLine(board[board.length - i - 1][j], lineType);
     }
     result += '\n ';
   }
@@ -84,11 +89,11 @@ const create = function(n, config) {
     size = config.size;
   }
 
-  const line = config !== undefined ? getLineType(config.line) : undefined;
+  const lineType = config !== undefined ? getLineType(config.line) : undefined;
 
-  const board = createBoard(getWidth(size), getHeight(size, isBlockOrFull(line)));
-  cantor(n, size, board, { x: parseInt(getWidth(size) / 2.0), y: getHeight(size, isBlockOrFull(line)) - 1 }, line);
-  return draw(board);
+  const board = createBoard(getWidth(size), getHeight(size, isBlockOrFull(lineType)));
+  cantor(n, size, board, { x: parseInt(getWidth(size) / 2.0), y: getHeight(size, isBlockOrFull(lineType)) - 1 }, lineType);
+  return draw(board, lineType);
 }
 
 module.exports = {
