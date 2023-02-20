@@ -9,9 +9,10 @@ const printUsage = function(showIntro) {
     console.log('\n' + 
                 ' Usage:\n' + 
                 '   $ cantor-set-cli <n>\n' + 
-                '   $ cantor-set-cli <n> <size>\n' + 
+                '   $ cantor-set-cli <n> [size] [options]\n' + 
                 '\n' + 
                 '   <n> is the recursive step, a number greater than or equal to 0\n' + 
+                '   [size] is the size to draw, a number greater than or equal to <n>\n' + 
                 '\n' +
                 ' Options:\n' + 
                 '   --line=<line>  Draw using a specific line type: [bold|double|full|block|standard] \n'); 
